@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal de la República - Protocolo Especial</title>
+    <style>
+        :root {
+            --rep-blue: #00d2ff;
+            --imp-red: #ff003c;
+            --bg-color: #050b14;
+            --panel-bg: rgba(0, 210, 255, 0.05);
+            --border-color: rgba(0, 210, 255, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--rep-blue);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            transition: all 1s ease;
+        }
+
+        /* Efecto de interferencia de holograma */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        .terminal {
+            width: 90%;
+            max-width: 600px;
+            background: var(--panel-bg);
+            border: 2px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            transition: all 1s ease;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .status-box {
+            border: 1px dashed var(--border-color);
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+        }
+
+        .status-value {
+            font-weight: bold;
+            animation: blink 1.5s infinite;
+        }
+
+        .btn-execute {
+            background: transparent;
+            color: var(--rep-blue);
+            border: 2px solid var(--rep-blue);
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.1);
+        }
+
+        .btn-execute:hover {
+            background: var(--rep-blue);
+            color: var(--bg-color);
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+        }
+
+        /* Modo Imperio Activo */
+        body.order-66-active {
+            --rep-blue: var(--imp-red);
+            --panel-bg: rgba(255, 0, 60, 0.05);
+            --border-color: rgba(255, 0, 60, 0.4);
+            background-color: #070002;
+        }
+
+        body.order-66-active .terminal {
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.4);
+            animation: shake 0.5s linear;
+        }
+
+        body.order-66-active .btn-execute {
+            display: none;
+        }
+
+        .transmission {
+            display: none;
+            font-style: italic;
+            margin-top: 20px;
+            font-size: 1.3rem;
+            color: #fff;
+            text-shadow: 0 0 10px var(--imp-red);
+        }
+
+        /* Animaciones */
+        @keyframes blink {
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanline"></div>
+
+    <div class="terminal">
+        <h1 id="terminal-title">Red de la República Galáctica</h1>
+        <p>CONEXIÓN ENCRIPTADA - CORUSCANT CENTRAL</p>
+        
+        <div class="status-box">
+            <p>Directiva de Contingencia: <span id="directive" class="status-value">INACTIVA</span></p>
+            <p>Estatus de los Jedi: <span id="jedi-status">GENERALES DEL EJÉRCITO</span></p>
+            <p>Fidelidad de los Clones: <span id="clone-status">LEALES A LA REPÚBLICA</span></p>
+        </div>
+
+        <button class="btn-execute" onclick="ejecutarOrden66()">RECIBIR TRANSMISIÓN PRIORITARIA</button>
+
+        <div id="transmission-text" class="transmission">
+            "Ejecute la Orden 66." <br><br>
+            <small>— Canciller Supremo Palpatine</small>
+        </div>
+    </div>
+
+    <script>
+        function ejecutarOrden66() {
+            // Activar clase de CSS del Imperio
+            document.body.classList.add('order-66-active');
+            
+            // Cambiar textos de la interfaz
+            document.getElementById('terminal-title').innerText = "DIRECTIVA DEL IMPERIO GALÁCTICO";
+            
+            const directive = document.getElementById('directive');
+            directive.innerText = "ORDEN 66 ACTIVA";
+            
+            document.getElementById('jedi-status').innerText = "TRAIDORES DE LA PATRIA - ELIMINAR";
+            document.getElementById('clone-status').innerText = "CHIP ENCEFÁLICO ACTIVADO - EJECUTANDO JEDI";
+            
+            // Mostrar la orden de Palpatine
+            document.getElementById('transmission-text').style.display = 'block';
+
+            // Efecto de sonido simulado por consola
+            console.log("%c⚠️ ALERTA: Todos los generales Jedi han sido declarados enemigos del estado.", "color: red; font-size: 16px; font-weight: bold;");
+        }
+    </script>
+</body>
+</html>
